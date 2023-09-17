@@ -1,0 +1,35 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 
+# @name create-transcription
+POST http://localhost:3333/videos/b4f7d76e-4157-40e7-b7fa-d451b09d5875/transcription
+Content-Type: application/json
+
+{
+  "prompt": "CINECIM, mental health, psicologia"
+}
+
+### 
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "b4f7d76e-4157-40e7-b7fa-d451b09d5875",
+  "temperature": 0.5,
+  "template": "Gere um resumo sucinto da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
